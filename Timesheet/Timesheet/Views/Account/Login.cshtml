@@ -1,0 +1,80 @@
+﻿@model Domain.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    ViewBag.BodyClasses = " login";
+}
+
+<!-- Wrapper -->
+<div id="login">
+	<div class="container">	
+		<div class="wrapper">		
+			<h1 class="glyphicons lock">TIMESHEETS <i></i></h1>
+		
+			<!-- Box -->
+			<div class="widget widget-heading-simple widget-body-gray">
+				
+				<div class="widget-body">
+				
+					<!-- Form -->
+                    @using (Html.BeginForm()) {	
+                        @Html.AntiForgeryToken()				
+						@Html.LabelFor(x=>x.Email)
+                        @Html.TextBoxFor(x=>x.Email, new { @class="input-block-level", placeholder="Your Email Address", type="email" })
+                        @Html.ValidationMessageFor(x=>x.Email)
+						<label>Password <a class="password" href="#">forgot it?</a></label>
+                        @Html.PasswordFor(x=>x.Password, new { @class="input-block-level margin-none", placeholder="Your Password"})						
+                        @Html.ValidationMessageFor(x=>x.Password)
+						<div class="separator bottom"></div> 
+						<div class="row-fluid">
+							<div class="span8">
+								<div class="uniformjs"><label class="checkbox">@Html.CheckBoxFor(x=>x.RememberMe) Remember me</label></div>
+							</div>
+							<div class="span4 center">
+								<button class="btn btn-block btn-inverse" type="submit">Sign in</button>
+							</div>
+						</div>
+					
+                    }
+					<!-- // Form END -->
+							
+				</div>
+				@*<div class="widget-footer">
+					<p class="glyphicons restart"><i></i>Please enter your username and password ...</p>
+				</div>*@
+			</div>
+			<!-- // Box END -->
+			
+			<div class="innerT center">
+			
+                
+				<a href="@Url.Action("Register", new { controller = "Account" })" class="btn btn-icon-stacked btn-block btn-success glyphicons user_add">
+                    <i></i>
+                    <span>Don't have an account?</span>
+                    <span class="strong">Sign up</span>
+				</a>
+				
+				@*<p class="innerT">Alternatively</p>
+				<a href="index.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="btn btn-icon-stacked btn-block btn-facebook glyphicons facebook"><i></i><span>Join using your</span><span class="strong">Facebook Account</span></a>
+				<p>or</p>
+				<a href="index.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="btn btn-icon-stacked btn-block btn-google glyphicons google_plus"><i></i><span>Join using your</span><span class="strong">Google Account</span></a>
+				<p>Having troubles? <a href="faq.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible">Get Help</a></p>*@
+			</div>
+			
+		</div>
+		
+	</div>
+	
+</div>
+<!-- // Wrapper END -->	
+
+@section Scripts {
+    <style>
+        span[data-valmsg-for="Password"] {
+            margin-top:10px;
+            display:inline-block;
+        }
+    </style>
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TimesheetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TimesheetModelStoreContainer">
+          <EntitySet Name="Companies" EntityType="TimesheetModel.Store.Companies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CompanyLocations" EntityType="TimesheetModel.Store.CompanyLocations" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FileStorage" EntityType="TimesheetModel.Store.FileStorage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserProfile" EntityType="TimesheetModel.Store.UserProfile" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_Membership" EntityType="TimesheetModel.Store.webpages_Membership" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="TimesheetModel.Store.webpages_OAuthMembership" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_Roles" EntityType="TimesheetModel.Store.webpages_Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="TimesheetModel.Store.webpages_UsersInRoles" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Companies_FileStorage" Association="TimesheetModel.Store.FK_Companies_FileStorage">
+            <End Role="FileStorage" EntitySet="FileStorage" />
+            <End Role="Companies" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyLocations_Companies" Association="TimesheetModel.Store.FK_CompanyLocations_Companies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="CompanyLocations" EntitySet="CompanyLocations" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RoleId" Association="TimesheetModel.Store.fk_RoleId">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserId" Association="TimesheetModel.Store.fk_UserId">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfile_CompanyLocations" Association="TimesheetModel.Store.FK_UserProfile_CompanyLocations">
+            <End Role="CompanyLocations" EntitySet="CompanyLocations" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="id_company" />
+          </Key>
+          <Property Name="id_company" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="fk_logo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyLocations">
+          <Key>
+            <PropertyRef Name="id_company_locations" />
+          </Key>
+          <Property Name="id_company_locations" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyLocation" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="fk_company" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FileStorage">
+          <Key>
+            <PropertyRef Name="id_file" />
+          </Key>
+          <Property Name="id_file" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="FileSize" Type="int" Nullable="false" />
+          <Property Name="FilePath" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="FileExtension" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="fk_file_type" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateDeleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="56" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="created_on" Type="datetime" Nullable="false" />
+          <Property Name="updated_on" Type="datetime" Nullable="false" />
+          <Property Name="deleted_on" Type="datetime" />
+          <Property Name="fk_company_location" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="LastPasswordFailureDate" Type="datetime" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordChangedDate" Type="datetime" />
+          <Property Name="PasswordSalt" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="ProviderUserId" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Companies_FileStorage">
+          <End Role="FileStorage" Type="TimesheetModel.Store.FileStorage" Multiplicity="1" />
+          <End Role="Companies" Type="TimesheetModel.Store.Companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileStorage">
+              <PropertyRef Name="id_file" />
+            </Principal>
+            <Dependent Role="Companies">
+              <PropertyRef Name="fk_logo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyLocations_Companies">
+          <End Role="Companies" Type="TimesheetModel.Store.Companies" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CompanyLocations" Type="TimesheetModel.Store.CompanyLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="id_company" />
+            </Principal>
+            <Dependent Role="CompanyLocations">
+              <PropertyRef Name="fk_company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RoleId">
+          <End Role="webpages_Roles" Type="TimesheetModel.Store.webpages_Roles" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="TimesheetModel.Store.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserId">
+          <End Role="UserProfile" Type="TimesheetModel.Store.UserProfile" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="TimesheetModel.Store.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfile_CompanyLocations">
+          <End Role="CompanyLocations" Type="TimesheetModel.Store.CompanyLocations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserProfile" Type="TimesheetModel.Store.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyLocations">
+              <PropertyRef Name="id_company_locations" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="fk_company_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TimesheetModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TimesheetEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="TimesheetModel.Company" />
+          <EntitySet Name="CompanyLocations" EntityType="TimesheetModel.CompanyLocation" />
+          <EntitySet Name="FileStorages" EntityType="TimesheetModel.FileStorage" />
+          <EntitySet Name="UserProfiles" EntityType="TimesheetModel.UserProfile" />
+          <EntitySet Name="webpages_Membership" EntityType="TimesheetModel.webpages_Membership" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="TimesheetModel.webpages_OAuthMembership" />
+          <EntitySet Name="webpages_Roles" EntityType="TimesheetModel.webpages_Roles" />
+          <AssociationSet Name="FK_Companies_FileStorage" Association="TimesheetModel.FK_Companies_FileStorage">
+            <End Role="FileStorage" EntitySet="FileStorages" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyLocations_Companies" Association="TimesheetModel.FK_CompanyLocations_Companies">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="CompanyLocation" EntitySet="CompanyLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfile_CompanyLocations" Association="TimesheetModel.FK_UserProfile_CompanyLocations">
+            <End Role="CompanyLocation" EntitySet="CompanyLocations" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="webpages_UsersInRoles" Association="TimesheetModel.webpages_UsersInRoles">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="id_company" />
+          </Key>
+          <Property Type="Int32" Name="id_company" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="fk_logo" Nullable="false" />
+          <NavigationProperty Name="FileStorage" Relationship="TimesheetModel.FK_Companies_FileStorage" FromRole="Company" ToRole="FileStorage" />
+          <NavigationProperty Name="CompanyLocations" Relationship="TimesheetModel.FK_CompanyLocations_Companies" FromRole="Company" ToRole="CompanyLocation" />
+        </EntityType>
+        <EntityType Name="CompanyLocation">
+          <Key>
+            <PropertyRef Name="id_company_locations" />
+          </Key>
+          <Property Type="Int32" Name="id_company_locations" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CompanyLocation1" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="fk_company" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="TimesheetModel.FK_CompanyLocations_Companies" FromRole="CompanyLocation" ToRole="Company" />
+          <NavigationProperty Name="UserProfiles" Relationship="TimesheetModel.FK_UserProfile_CompanyLocations" FromRole="CompanyLocation" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="FileStorage">
+          <Key>
+            <PropertyRef Name="id_file" />
+          </Key>
+          <Property Type="Int32" Name="id_file" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="FileSize" Nullable="false" />
+          <Property Type="String" Name="FilePath" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FileExtension" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="fk_file_type" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateDeleted" Precision="3" />
+          <NavigationProperty Name="Companies" Relationship="TimesheetModel.FK_Companies_FileStorage" FromRole="FileStorage" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="created_on" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="updated_on" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="deleted_on" Precision="3" />
+          <Property Type="Int32" Name="fk_company_location" Nullable="false" />
+          <NavigationProperty Name="CompanyLocation" Relationship="TimesheetModel.FK_UserProfile_CompanyLocations" FromRole="UserProfile" ToRole="CompanyLocation" />
+          <NavigationProperty Name="webpages_Roles" Relationship="TimesheetModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Precision="3" />
+          <Property Type="String" Name="ConfirmationToken" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsConfirmed" />
+          <Property Type="DateTime" Name="LastPasswordFailureDate" Precision="3" />
+          <Property Type="Int32" Name="PasswordFailuresSinceLastSuccess" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PasswordChangedDate" Precision="3" />
+          <Property Type="String" Name="PasswordSalt" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordVerificationToken" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PasswordVerificationTokenExpirationDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Type="String" Name="Provider" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProviderUserId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Type="Int32" Name="RoleId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RoleName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserProfiles" Relationship="TimesheetModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_Companies_FileStorage">
+          <End Type="TimesheetModel.FileStorage" Role="FileStorage" Multiplicity="1" />
+          <End Type="TimesheetModel.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileStorage">
+              <PropertyRef Name="id_file" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="fk_logo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyLocations_Companies">
+          <End Type="TimesheetModel.Company" Role="Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TimesheetModel.CompanyLocation" Role="CompanyLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id_company" />
+            </Principal>
+            <Dependent Role="CompanyLocation">
+              <PropertyRef Name="fk_company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfile_CompanyLocations">
+          <End Type="TimesheetModel.CompanyLocation" Role="CompanyLocation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TimesheetModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyLocation">
+              <PropertyRef Name="id_company_locations" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="fk_company_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="webpages_UsersInRoles">
+          <End Type="TimesheetModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
+          <End Type="TimesheetModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TimesheetModelStoreContainer" CdmEntityContainer="TimesheetEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="TimesheetModel.Company">
+              <MappingFragment StoreEntitySet="Companies">
+                <ScalarProperty Name="fk_logo" ColumnName="fk_logo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id_company" ColumnName="id_company" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyLocations">
+            <EntityTypeMapping TypeName="TimesheetModel.CompanyLocation">
+              <MappingFragment StoreEntitySet="CompanyLocations">
+                <ScalarProperty Name="fk_company" ColumnName="fk_company" />
+                <ScalarProperty Name="CompanyLocation1" ColumnName="CompanyLocation" />
+                <ScalarProperty Name="id_company_locations" ColumnName="id_company_locations" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileStorages">
+            <EntityTypeMapping TypeName="TimesheetModel.FileStorage">
+              <MappingFragment StoreEntitySet="FileStorage">
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="fk_file_type" ColumnName="fk_file_type" />
+                <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="id_file" ColumnName="id_file" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="TimesheetModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="fk_company_location" ColumnName="fk_company_location" />
+                <ScalarProperty Name="deleted_on" ColumnName="deleted_on" />
+                <ScalarProperty Name="updated_on" ColumnName="updated_on" />
+                <ScalarProperty Name="created_on" ColumnName="created_on" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="TimesheetModel.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="TimesheetModel.webpages_OAuthMembership">
+              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="TimesheetModel.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="TimesheetModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+            <EndProperty Name="UserProfile">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="webpages_Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

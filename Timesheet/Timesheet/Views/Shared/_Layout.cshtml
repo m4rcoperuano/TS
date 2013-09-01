@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
+<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
+<!--[if IE 8]>    <html class="ie lt-ie9 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
+<!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
+<!--[if !IE]><!-->
+<html class="animations fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat">
+<!-- <![endif]-->
+<head>
+    @{
+        string controller = ViewContext.RouteData.Values["controller"].ToString();
+        string action = ViewContext.RouteData.Values["action"].ToString();        
+    }
+
+    <title>@ViewBag.Title - Timesheets</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!-- Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+
+    @* ################################# CSS FILES ############################# *@
+    @* Bootstrap CSS *@
+    @Styles.Render("~/Plugins/FLTBootstrap/css/bootstrap.css")
+    @Styles.Render("~/Plugins/FLTBootstrap/css/responsive.css")
+
+    @*Glyphicons*@
+    @Styles.Render("~/Plugins/Theme/fonts/glyphicons/css/glyphicons.css")
+    @Styles.Render("~/Plugins/Theme/fonts/font-awesome/css/font-awesome.min.css")
+    <!--[if IE 7]>@Styles.Render("~/Plugins/Theme/fonts/font-awesome/css/font-awesome-ie7.min.css")<![endif]-->
+
+    <!-- Uniform Pretty Checkboxes -->
+    @Styles.Render("~/Plugins/Theme/scripts/plugins/forms/pixelmatrix-uniform/css/uniform.default.css")
+
+    <!-- PrettyPhoto -->
+    @Styles.Render("~/Plugins/Theme/scripts/plugins/gallery/prettyphoto/css/prettyPhoto.css")
+
+
+
+    @* Custom CSS (overwrites the boo *@
+    @Styles.Render("~/Content/css")
+    @* ################################# CSS FILES ############################# *@
+
+
+
+    @* ################################# JS FILES ############################# *@
+    @* Modernizer *@
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    @* Bootstrap *@
+    @Scripts.Render("~/Plugins/Bootstrap/js/bootstrap.min.js")
+    @* ################################# JS FILES ############################# *@
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        @Scripts.Render("~/Plugins/Theme/scripts/plugins/system/html5shiv.js")
+    <![endif]-->
+
+    <!-- Main Theme Stylesheet :: CSS -->
+    @Styles.Render("~/Plugins/Theme/css/style-default-menus-dark.css")
+
+    <!-- LESS.js Library -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/system/less.min.js")
+
+    <!-- Global -->
+    <script>
+        //<![CDATA[
+        var basePath = '',
+            commonPath = '/Plugins/Theme';
+
+        // colors
+        var primaryColor = '#e5412d',
+            dangerColor = '#b55151',
+            successColor = '#609450',
+            warningColor = '#ab7a4b',
+            inverseColor = '#45484d';
+
+        var themerPrimaryColor = primaryColor;
+        //]]>
+    </script>
+
+
+    @* ################################# Dynamic Scripts/Styles ############################# *@
+    @RenderSection("scripts", required: false)
+</head>
+
+
+
+<body class="document-body @ViewBag.BodyClasses">
+
+    @if (controller != "Account")
+    {
+        @Styles.Render("~/Content/MainWeb.css")
+        @Html.Partial("_NavigationForWebsite")        
+    }
+    else
+    {
+        @Styles.Render("~/Content/App.css")   
+    }
+
+    @RenderBody()
+
+
+    <!-- jQuery Event Move -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/system/jquery.event.move/js/jquery.event.move.js")
+
+    <!-- jQuery Event Swipe -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/system/jquery.event.swipe/js/jquery.event.swipe.js")
+
+    <!-- jQuery ScrollTo Plugin -->
+    <!--[if gt IE 8]><!-->
+    <script src="http://balupton.github.io/jquery-scrollto/lib/jquery-scrollto.js"></script>
+    <!--<![endif]-->
+
+    <!-- History.js -->
+    <!--[if gt IE 8]><!-->
+    <script src="http://browserstate.github.io/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
+    <!--<![endif]-->
+
+    <!-- jQuery Ajaxify -->
+    <!--[if gt IE 8]><!-->@Scripts.Render("~/Plugins/Theme/scripts/plugins/system/jquery-ajaxify/ajaxify-html5.js")<!--<![endif]-->
+
+
+    <!-- Code Beautify -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/other/js-beautify/beautify.js")
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/other/js-beautify/beautify-html.js")
+
+    <!-- PrettyPhoto -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/gallery/prettyphoto/js/jquery.prettyPhoto.js")
+
+    <!-- SlimScroll Plugin -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/other/jquery-slimScroll/jquery.slimscroll.js")
+
+    <!-- Holder Plugin -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/other/holder/holder.js")
+
+    <!-- Uniform Forms Plugin -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/forms/pixelmatrix-uniform/jquery.uniform.min.js")
+
+    <!-- MegaMenu -->
+    @Scripts.Render("~/Plugins/Theme/scripts/demo/megamenu.js?1374506526")
+
+
+    <!-- Common Demo Script -->
+    @Scripts.Render("~/Plugins/Theme/scripts/demo/common.js")
+
+
+</body>
+
+</html>
