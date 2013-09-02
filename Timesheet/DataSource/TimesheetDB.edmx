@@ -6,14 +6,24 @@
     <edmx:StorageModels>
     <Schema Namespace="TimesheetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="TimesheetModelStoreContainer">
+          <EntitySet Name="ClientProfiles" EntityType="TimesheetModel.Store.ClientProfiles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Companies" EntityType="TimesheetModel.Store.Companies" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CompanyLocations" EntityType="TimesheetModel.Store.CompanyLocations" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FileStorage" EntityType="TimesheetModel.Store.FileStorage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="States" EntityType="TimesheetModel.Store.States" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserProfile" EntityType="TimesheetModel.Store.UserProfile" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="webpages_Membership" EntityType="TimesheetModel.Store.webpages_Membership" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="TimesheetModel.Store.webpages_OAuthMembership" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="webpages_Roles" EntityType="TimesheetModel.Store.webpages_Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="webpages_UsersInRoles" EntityType="TimesheetModel.Store.webpages_UsersInRoles" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_ClientProfiles_CompanyLocations" Association="TimesheetModel.Store.FK_ClientProfiles_CompanyLocations">
+            <End Role="CompanyLocations" EntitySet="CompanyLocations" />
+            <End Role="ClientProfiles" EntitySet="ClientProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientProfiles_States" Association="TimesheetModel.Store.FK_ClientProfiles_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="ClientProfiles" EntitySet="ClientProfiles" />
+          </AssociationSet>
           <AssociationSet Name="FK_Companies_FileStorage" Association="TimesheetModel.Store.FK_Companies_FileStorage">
             <End Role="FileStorage" EntitySet="FileStorage" />
             <End Role="Companies" EntitySet="Companies" />
@@ -35,6 +45,20 @@
             <End Role="UserProfile" EntitySet="UserProfile" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ClientProfiles">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="client_name" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="address" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="address2" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="fk_state" Type="int" Nullable="false" />
+          <Property Name="zip" Type="nvarchar" Nullable="false" MaxLength="5" />
+          <Property Name="zip_4" Type="nvarchar" Nullable="false" MaxLength="4" />
+          <Property Name="fk_company_location" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Companies">
           <Key>
             <PropertyRef Name="id_company" />
@@ -63,6 +87,14 @@
           <Property Name="fk_file_type" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateDeleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="id_state" />
+          </Key>
+          <Property Name="id_state" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="state_name" Type="nvarchar" Nullable="false" MaxLength="70" />
+          <Property Name="state_abbrev" Type="char" Nullable="false" MaxLength="2" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -117,6 +149,32 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ClientProfiles_CompanyLocations">
+          <End Role="CompanyLocations" Type="TimesheetModel.Store.CompanyLocations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ClientProfiles" Type="TimesheetModel.Store.ClientProfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyLocations">
+              <PropertyRef Name="id_company_locations" />
+            </Principal>
+            <Dependent Role="ClientProfiles">
+              <PropertyRef Name="fk_company_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientProfiles_States">
+          <End Role="States" Type="TimesheetModel.Store.States" Multiplicity="1" />
+          <End Role="ClientProfiles" Type="TimesheetModel.Store.ClientProfiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="id_state" />
+            </Principal>
+            <Dependent Role="ClientProfiles">
+              <PropertyRef Name="fk_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Companies_FileStorage">
           <End Role="FileStorage" Type="TimesheetModel.Store.FileStorage" Multiplicity="0..1" />
           <End Role="Companies" Type="TimesheetModel.Store.Companies" Multiplicity="*" />
@@ -209,6 +267,16 @@
             <End Role="Company" EntitySet="Companies" />
             <End Role="CompanyLocation" EntitySet="CompanyLocations" />
           </AssociationSet>
+          <EntitySet Name="ClientProfiles" EntityType="TimesheetModel.ClientProfile" />
+          <EntitySet Name="States" EntityType="TimesheetModel.State" />
+          <AssociationSet Name="FK_ClientProfiles_CompanyLocations" Association="TimesheetModel.FK_ClientProfiles_CompanyLocations">
+            <End Role="CompanyLocation" EntitySet="CompanyLocations" />
+            <End Role="ClientProfile" EntitySet="ClientProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientProfiles_States" Association="TimesheetModel.FK_ClientProfiles_States">
+            <End Role="State" EntitySet="States" />
+            <End Role="ClientProfile" EntitySet="ClientProfiles" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CompanyLocation">
           <Key>
@@ -219,6 +287,7 @@
           <Property Type="Int32" Name="fk_company" Nullable="false" />
           <NavigationProperty Name="UserProfiles" Relationship="TimesheetModel.FK_UserProfile_CompanyLocations" FromRole="CompanyLocation" ToRole="UserProfile" />
           <NavigationProperty Name="Company" Relationship="TimesheetModel.FK_CompanyLocations_Companies" FromRole="CompanyLocation" ToRole="Company" />
+          <NavigationProperty Name="ClientProfiles" Relationship="TimesheetModel.FK_ClientProfiles_CompanyLocations" FromRole="CompanyLocation" ToRole="ClientProfile" />
         </EntityType>
         <EntityType Name="FileStorage">
           <Key>
@@ -336,6 +405,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ClientProfile">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Type="Int32" Name="id_client" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="client_name" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="address" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="address2" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="fk_state" Nullable="false" />
+          <Property Type="String" Name="zip" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="zip_4" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="fk_company_location" Nullable="false" />
+          <NavigationProperty Name="CompanyLocation" Relationship="TimesheetModel.FK_ClientProfiles_CompanyLocations" FromRole="ClientProfile" ToRole="CompanyLocation" />
+          <NavigationProperty Name="State" Relationship="TimesheetModel.FK_ClientProfiles_States" FromRole="ClientProfile" ToRole="State" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="id_state" />
+          </Key>
+          <Property Type="Int32" Name="id_state" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="state_name" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="state_abbrev" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="ClientProfiles" Relationship="TimesheetModel.FK_ClientProfiles_States" FromRole="State" ToRole="ClientProfile" />
+        </EntityType>
+        <Association Name="FK_ClientProfiles_CompanyLocations">
+          <End Type="TimesheetModel.CompanyLocation" Role="CompanyLocation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TimesheetModel.ClientProfile" Role="ClientProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyLocation">
+              <PropertyRef Name="id_company_locations" />
+            </Principal>
+            <Dependent Role="ClientProfile">
+              <PropertyRef Name="fk_company_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientProfiles_States">
+          <End Type="TimesheetModel.State" Role="State" Multiplicity="1" />
+          <End Type="TimesheetModel.ClientProfile" Role="ClientProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="id_state" />
+            </Principal>
+            <Dependent Role="ClientProfile">
+              <PropertyRef Name="fk_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -427,6 +547,30 @@
                 <ScalarProperty Name="fk_logo" ColumnName="fk_logo" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id_company" ColumnName="id_company" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientProfiles">
+            <EntityTypeMapping TypeName="TimesheetModel.ClientProfile">
+              <MappingFragment StoreEntitySet="ClientProfiles">
+                <ScalarProperty Name="fk_company_location" ColumnName="fk_company_location" />
+                <ScalarProperty Name="zip_4" ColumnName="zip_4" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="fk_state" ColumnName="fk_state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address2" ColumnName="address2" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="client_name" ColumnName="client_name" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="TimesheetModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="state_abbrev" ColumnName="state_abbrev" />
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+                <ScalarProperty Name="id_state" ColumnName="id_state" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

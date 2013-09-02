@@ -1,15 +1,15 @@
 ﻿<!DOCTYPE html>
-<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
-<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
-<!--[if IE 8]>    <html class="ie lt-ie9 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
-<!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat"> <![endif]-->
-<!--[if !IE]><!-->
-<html class="animations fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-collapsible sidebar-width-mini sidebar-hat">
+<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full menuh-top sticky-top"> <![endif]-->
+<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
+<!--[if IE 8]>    <html class="ie lt-ie9 fluid top-full menuh-top sticky-top"> <![endif]-->
+<!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
+<!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top"><!-- <![endif]-->
 <!-- <![endif]-->
 <head>
     @{
         string controller = ViewContext.RouteData.Values["controller"].ToString();
         string action = ViewContext.RouteData.Values["action"].ToString();        
+        
     }
 
     <title>@ViewBag.Title - Timesheets</title>
@@ -153,48 +153,6 @@
         <!-- Main Container Fluid -->
         <div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
 
-            <!-- Sidebar menu & content wrapper -->
-            <div id="wrapper">
-
-                <!-- Sidebar Menu -->
-                <div id="menu" class="hidden-print">
-
-                    <!-- Brand -->
-                    <a href="#" class="appbrand"><span class="text-primary">TS</span></a>
-
-                    <!-- Scrollable menu wrapper with Maximum height -->
-                    <div class="slim-scroll" data-scroll-height="800px">
-
-                        <!-- Menu Toggle Button -->
-                        <button type="button" class="btn btn-navbar">
-                            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                        </button>
-                        <!-- // Menu Toggle Button END -->
-
-                        <!-- Sidebar Profile -->
-                        <span class="profile center">
-                            <a href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible">
-                                <img src="http://dummyimage.com/74x74/232323/ffffff&text=photo" alt="Avatar" /></a>
-                        </span>
-                        <!-- // Sidebar Profile END -->
-
-                        <!-- Menu -->
-                        <ul>
-                        </ul>
-                        <div class="clearfix"></div>
-                        <!-- // Menu END -->
-
-                        <div class="menu-hidden-element alert alert-primary">
-                            <a class="close" data-dismiss="alert">&times;</a>
-                            <p>Integer quis tempor mi. Donec venenatis dui in neque fringilla at iaculis libero ullamcorper. In velit sem, sodales id hendrerit ac, fringilla et est.</p>
-                        </div>
-
-                    </div>
-                    <!-- // Scrollable Menu wrapper with Maximum Height END -->
-
-                </div>
-                <!-- // Sidebar Menu END -->
-
                 <!-- Content -->
                 <div id="content">
 
@@ -210,9 +168,69 @@
 
                         <ul class="topnav pull-left">
                             <li class="@ViewBag.DashboardActive">
-                                <a href="#" class="glyphicons dashboard">
+                                <a href="@Url.Action("Index", new { controller = "Dashboard" })" class="glyphicons dashboard">
                                     <i></i>Dashboard
                                 </a>
+                            </li>
+                            <li class="dropdown dd-1 @ViewBag.ManageActive">
+                                <a href="#" data-toggle="dropdown" class="glyphicons settings"><i></i>Manage<span class="caret"></span></a>
+                                <ul class="dropdown-menu pull-left">
+                                    <!-- Components Submenu Level 2 -->
+                                    <li class="dropdown submenu">
+                                        <a data-toggle="dropdown" class="dropdown-toggle">Clients</a>
+                                        <ul class="dropdown-menu submenu-show pull-right submenu-hide">
+                                            <li class="">@Html.ActionLink("Add New Client", "Create", new { controller = "Client" })</li>
+                                            <li class=""><a href="form_elements.html?lang=en">Manage Existing Clients</a></li>                                            
+                                        </ul>
+                                    </li>
+                                    <!-- // Components Submenu Level 2 END -->
+
+                                    <li class="dropdown submenu">
+                                        <a data-toggle="dropdown" class="dropdown-toggle">Projects</a>
+                                        <ul class="dropdown-menu submenu-show pull-right submenu-hide">
+                                            <li class=""><a href="tables.html?lang=en">Add New Project</a></li>
+                                            <li class=""><a href="tables_responsive.html?lang=en">Manage Existing Projects</a></li>                                            
+                                        </ul>
+                                    </li>
+
+                                    @*<!-- Components Submenu Regular Items -->
+                                    <li class=""><a href="ui.html?lang=en">UI Elements</a></li>
+                                    <li class=""><a href="icons.html?lang=en">Icons</a></li>
+                                    <li class=""><a href="widgets.html?lang=en">Widgets</a></li>
+                                    <li class=""><a href="tabs.html?lang=en">Tabs</a></li>
+                                    <li class=""><a href="sliders.html?lang=en">Sliders</a></li>
+                                    <li class=""><a href="charts.html?lang=en">Charts</a></li>
+                                    <li class=""><a href="grid.html?lang=en">Grid system</a></li>
+                                    <li class=""><a href="notifications.html?lang=en">Notifications</a></li>
+                                    <li class=""><a href="modals.html?lang=en">Modals</a></li>
+                                    <li class=""><a href="thumbnails.html?lang=en">Thumbnails</a></li>
+                                    <li class=""><a href="carousels.html?lang=en">Carousels</a></li>
+                                    <li class=""><a href="image_crop.html?lang=en">Image Cropping</a></li>
+                                    <li class=""><a href="tour.html?lang=en">Page Tour</a></li>
+
+                                    <li class="dropdown submenu">
+                                        <a data-toggle="dropdown" class="dropdown-toggle">APIs</a>
+                                        <ul class="dropdown-menu submenu-show submenu-hide pull-right">
+                                            <li class=""><a href="twitter.html?lang=en">Twitter API</a></li>
+                                            <li class=""><a href="google_analytics.html?lang=en">Google Analytics API</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class=""><a href="infinite_scroll.html?lang=en">Infinite Scroll</a></li>*@
+                                    <!-- // Components Submenu Regular Items END -->
+
+                                    @*<li class="dropdown submenu">
+                                        <a data-toggle="dropdown" class="dropdown-toggle glyphicons circle_info"><i></i>4 Level Menu</a>
+                                        <ul class="dropdown-menu submenu-show submenu-hide pull-right">
+                                            <li class="dropdown submenu">
+                                                <a data-toggle="dropdown" href="#" class="dropdown-toggle">Menu item</a>
+                                                <ul class="dropdown-menu submenu-show submenu-hide pull-right">
+                                                    <li><a href="#">Menu item</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>*@
+                                </ul>
                             </li>
                         </ul>
 
@@ -220,7 +238,7 @@
                         <ul class="topnav pull-right hidden-phone">
 
 
-@*                            <!-- Language menu -->
+                            @*                            <!-- Language menu -->
                             <li class="hidden-phone dropdown dd-1 dd-flags" id="lang_nav">
                                 <a href="#" data-toggle="dropdown">
                                     <img src="../../../../../common/theme/images/lang/en.png" alt="en" /></a>
@@ -265,7 +283,7 @@
                                     </li>
                                     <li>
                                         <span>
-                                            @Html.ActionLink("Logout", "Logout", new { controller = "Account" }, new { @class="btn btn-default btn-mini pull-right" })                                            
+                                            @Html.ActionLink("Logout", "Logout", new { controller = "Account" }, new { @class = "btn btn-default btn-mini pull-right" })
                                         </span>
                                     </li>
                                 </ul>
@@ -276,9 +294,15 @@
                         <!-- // Top Menu Right END -->
 
                         <ul class="topnav pull-right hidden-phone">
-                            <li><a href="" class="glyphicons envelope single-icon"><i></i><!-- span class="badge fix badge-primary">5</!--></a></li>
-                            <li><a href="" class="glyphicons cup single-icon"><i></i><!-- span class="badge fix badge-primary">7</!--></a></li>
-                            <li class="hidden-tablet"><a href="" class="glyphicons comments single-icon"><i></i><!-- span class="badge fix badge-primary">3</!--></a></li>
+                            <li><a href="" class="glyphicons envelope single-icon"><i></i>
+                                <!-- span class="badge fix badge-primary">5</!-->
+                            </a></li>
+                            <li><a href="" class="glyphicons cup single-icon"><i></i>
+                                <!-- span class="badge fix badge-primary">7</!-->
+                            </a></li>
+                            <li class="hidden-tablet"><a href="" class="glyphicons comments single-icon"><i></i>
+                                <!-- span class="badge fix badge-primary">3</!-->
+                            </a></li>
                         </ul>
                         <div class="clearfix"></div>
 
@@ -290,8 +314,8 @@
                 </div>
                 <!-- // Content END -->
 
-            </div>
-            <div class="clearfix"></div>
+            
+            
             <!-- // Sidebar menu & content wrapper END -->
 
             <div id="footer" class="hidden-print">
@@ -307,7 +331,8 @@
         <!-- // Main Container Fluid END -->            
        
     }
-    else {
+    else
+    {
         @RenderBody()   
     }
 

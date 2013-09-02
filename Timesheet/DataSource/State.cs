@@ -12,20 +12,17 @@ namespace DataSource
     using System;
     using System.Collections.Generic;
     
-    public partial class CompanyLocation
+    public partial class State
     {
-        public CompanyLocation()
+        public State()
         {
-            this.UserProfiles = new HashSet<UserProfile>();
             this.ClientProfiles = new HashSet<ClientProfile>();
         }
     
-        public int id_company_locations { get; set; }
-        public string CompanyLocation1 { get; set; }
-        public int fk_company { get; set; }
+        public int id_state { get; set; }
+        public string state_name { get; set; }
+        public string state_abbrev { get; set; }
     
-        public virtual ICollection<UserProfile> UserProfiles { get; set; }
-        public virtual Company Company { get; set; }
         public virtual ICollection<ClientProfile> ClientProfiles { get; set; }
     }
 }
