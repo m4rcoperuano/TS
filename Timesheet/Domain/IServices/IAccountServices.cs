@@ -16,5 +16,7 @@ namespace Domain.IServices
         RegisterModel GetRegisterModel();
         bool RegisterUser(RegisterModel registerModel);
         bool LoginUser(LoginModel loginModel);
+        bool ConfirmUser(string confirmationToken);
+        void LogoutUser();
     }
 }

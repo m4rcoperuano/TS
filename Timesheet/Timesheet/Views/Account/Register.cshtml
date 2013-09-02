@@ -4,8 +4,6 @@
     ViewBag.BodyClasses = " login";
 }
 
-
-
 <!-- Wrapper -->
 <div id="login">
 
@@ -16,7 +14,7 @@
             <h1 class="glyphicons lock">TIMESHEETS <i></i></h1>
 
             
-            <div class="innerT center">                
+            <div class="innerT center" style="padding-top:0;">                
 				<a href="index.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="btn btn-icon-stacked btn-block btn-facebook glyphicons facebook"><i></i><span>Join using your</span><span class="strong">Facebook Account</span></a>
 				<p>Or</p>
 				<a href="index.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="btn btn-icon-stacked btn-block btn-google glyphicons google_plus"><i></i><span>Join using your</span><span class="strong">Google Account</span></a>
@@ -26,9 +24,8 @@
 
             <!-- Box -->
             <div class="widget widget-heading-simple widget-body-gray">
-
+                
                 <div class="widget-body">
-
                     <!-- Form -->
                     @using (Html.BeginForm())
                     {					 

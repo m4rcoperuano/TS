@@ -31,7 +31,8 @@ namespace Timesheet
 
     public static void RegisterTypes(IUnityContainer container)
     {
-        container.RegisterType<Domain.IServices.IAccountServices, Domain.Services.AccountServices>();
+        container.RegisterType<Domain.IServices.IAccountServices, Timesheet.Services.AccountServices>();
+        container.RegisterType<Domain.IServices.IMembership, Timesheet.Services.AccountMembership>();
     }
 
     public static void RegisterMapper()

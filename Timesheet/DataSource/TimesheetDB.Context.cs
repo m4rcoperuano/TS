@@ -25,12 +25,12 @@ namespace DataSource
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyLocation> CompanyLocations { get; set; }
         public DbSet<FileStorage> FileStorages { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public DbSet<Company> Companies { get; set; }
     }
 }

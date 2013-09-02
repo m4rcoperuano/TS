@@ -21,7 +21,7 @@ namespace DataSource
     
         public int id_company { get; set; }
         public string Name { get; set; }
-        public int fk_logo { get; set; }
+        public Nullable<int> fk_logo { get; set; }
     
         public virtual FileStorage FileStorage { get; set; }
         public virtual ICollection<CompanyLocation> CompanyLocations { get; set; }

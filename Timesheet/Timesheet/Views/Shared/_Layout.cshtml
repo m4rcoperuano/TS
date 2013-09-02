@@ -37,6 +37,9 @@
     <!-- PrettyPhoto -->
     @Styles.Render("~/Plugins/Theme/scripts/plugins/gallery/prettyphoto/css/prettyPhoto.css")
 
+    <!-- Notyfy CSS -->
+    @Styles.Render("~/Plugins/Theme/scripts/plugins/notifications/notyfy/themes/default.css")
+    @Styles.Render("~/Plugins/Theme/scripts/plugins/notifications/notyfy/jquery.notyfy.css")
 
 
     @* Custom CSS (overwrites the boo *@
@@ -85,27 +88,6 @@
     </script>
 
 
-    @* ################################# Dynamic Scripts/Styles ############################# *@
-    @RenderSection("scripts", required: false)
-</head>
-
-
-
-<body class="document-body @ViewBag.BodyClasses">
-
-    @if (controller != "Account")
-    {
-        @Styles.Render("~/Content/MainWeb.css")
-        @Html.Partial("_NavigationForWebsite")        
-    }
-    else
-    {
-        @Styles.Render("~/Content/App.css")   
-    }
-
-    @RenderBody()
-
-
     <!-- jQuery Event Move -->
     @Scripts.Render("~/Plugins/Theme/scripts/plugins/system/jquery.event.move/js/jquery.event.move.js")
 
@@ -145,9 +127,216 @@
     <!-- MegaMenu -->
     @Scripts.Render("~/Plugins/Theme/scripts/demo/megamenu.js?1374506526")
 
+    <!-- Notify -->
+    @Scripts.Render("~/Plugins/Theme/scripts/plugins/notifications/notyfy/jquery.notyfy.js")
 
     <!-- Common Demo Script -->
     @Scripts.Render("~/Plugins/Theme/scripts/demo/common.js")
+
+
+
+
+
+    @Scripts.Render("~/Scripts/Common/global.js")
+
+    @* ################################# Dynamic Scripts/Styles ############################# *@
+    @RenderSection("scripts", required: false)
+</head>
+
+
+
+<body class="document-body @ViewBag.BodyClasses">
+
+    @if (WebSecurity.IsAuthenticated)
+    {
+        
+        <!-- Main Container Fluid -->
+        <div class="container-fluid menu-hidden sidebar-hidden-phone fluid menu-left">
+
+            <!-- Sidebar menu & content wrapper -->
+            <div id="wrapper">
+
+                <!-- Sidebar Menu -->
+                <div id="menu" class="hidden-print">
+
+                    <!-- Brand -->
+                    <a href="#" class="appbrand"><span class="text-primary">TS</span></a>
+
+                    <!-- Scrollable menu wrapper with Maximum height -->
+                    <div class="slim-scroll" data-scroll-height="800px">
+
+                        <!-- Menu Toggle Button -->
+                        <button type="button" class="btn btn-navbar">
+                            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button>
+                        <!-- // Menu Toggle Button END -->
+
+                        <!-- Sidebar Profile -->
+                        <span class="profile center">
+                            <a href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible">
+                                <img src="http://dummyimage.com/74x74/232323/ffffff&text=photo" alt="Avatar" /></a>
+                        </span>
+                        <!-- // Sidebar Profile END -->
+
+                        <!-- Menu -->
+                        <ul>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <!-- // Menu END -->
+
+                        <div class="menu-hidden-element alert alert-primary">
+                            <a class="close" data-dismiss="alert">&times;</a>
+                            <p>Integer quis tempor mi. Donec venenatis dui in neque fringilla at iaculis libero ullamcorper. In velit sem, sodales id hendrerit ac, fringilla et est.</p>
+                        </div>
+
+                    </div>
+                    <!-- // Scrollable Menu wrapper with Maximum Height END -->
+
+                </div>
+                <!-- // Sidebar Menu END -->
+
+                <!-- Content -->
+                <div id="content">
+
+                    <!-- Top navbar -->
+                    <div class="navbar main">
+
+                        <!-- Menu Toggle Button -->
+                        <button type="button" class="btn btn-navbar pull-left visible-phone">
+                            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button>
+                        <!-- // Menu Toggle Button END -->
+
+
+                        <ul class="topnav pull-left">
+                            <li class="@ViewBag.DashboardActive">
+                                <a href="#" class="glyphicons dashboard">
+                                    <i></i>Dashboard
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Top Menu Right -->
+                        <ul class="topnav pull-right hidden-phone">
+
+
+@*                            <!-- Language menu -->
+                            <li class="hidden-phone dropdown dd-1 dd-flags" id="lang_nav">
+                                <a href="#" data-toggle="dropdown">
+                                    <img src="../../../../../common/theme/images/lang/en.png" alt="en" /></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li class="active"><a href="?module=admin&amp;page=blank&amp;url_rewrite=&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible&amp;lang=en" title="English">
+                                        <img src="../../../../../common/theme/images/lang/en.png" alt="English">
+                                        English</a></li>
+                                    <li><a href="?module=admin&amp;page=blank&amp;url_rewrite=&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible&amp;lang=ro" title="Romanian">
+                                        <img src="../../../../../common/theme/images/lang/ro.png" alt="Romanian">
+                                        Romanian</a></li>
+                                    <li><a href="?module=admin&amp;page=blank&amp;url_rewrite=&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible&amp;lang=it" title="Italian">
+                                        <img src="../../../../../common/theme/images/lang/it.png" alt="Italian">
+                                        Italian</a></li>
+                                    <li><a href="?module=admin&amp;page=blank&amp;url_rewrite=&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible&amp;lang=fr" title="French">
+                                        <img src="../../../../../common/theme/images/lang/fr.png" alt="French">
+                                        French</a></li>
+                                    <li><a href="?module=admin&amp;page=blank&amp;url_rewrite=&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible&amp;lang=pl" title="Polish">
+                                        <img src="../../../../../common/theme/images/lang/pl.png" alt="Polish">
+                                        Polish</a></li>
+                                </ul>
+                            </li>
+                            <!-- // Language menu END -->*@
+
+                            <!-- Profile / Logout menu -->
+                            <li class="account dropdown dd-1">
+                                <a data-toggle="dropdown" href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="glyphicons logout lock"><span class="hidden-tablet hidden-phone hidden-desktop-1">mosaicpro</span><i></i></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="glyphicons cogwheel">Settings<i></i></a></li>
+                                    <li><a href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="glyphicons camera">My Photos<i></i></a></li>
+                                    <li class="profile">
+                                        <span>
+                                            <span class="heading">Profile <a href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="pull-right text-primary text-weight-regular">edit</a></span>
+                                            <a href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="img thumb">
+                                                <img data-src="holder.js/51x51/dark" alt="Avatar" />
+                                            </a>
+                                            <span class="details">
+                                                <a href="my_account_advanced.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="strong text-regular">Mosaic Pro</a>
+                                                contact@mosaicpro.biz
+                                            </span>
+                                            <span class="clearfix"></span>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            @Html.ActionLink("Logout", "Logout", new { controller = "Account" }, new { @class="btn btn-default btn-mini pull-right" })                                            
+                                        </span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- // Profile / Logout menu END -->
+
+                        </ul>
+                        <!-- // Top Menu Right END -->
+
+                        <ul class="topnav pull-right hidden-phone">
+                            <li><a href="" class="glyphicons envelope single-icon"><i></i><!-- span class="badge fix badge-primary">5</!--></a></li>
+                            <li><a href="" class="glyphicons cup single-icon"><i></i><!-- span class="badge fix badge-primary">7</!--></a></li>
+                            <li class="hidden-tablet"><a href="" class="glyphicons comments single-icon"><i></i><!-- span class="badge fix badge-primary">3</!--></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <!-- Top navbar END -->
+
+                    @RenderBody()
+
+                </div>
+                <!-- // Content END -->
+
+            </div>
+            <div class="clearfix"></div>
+            <!-- // Sidebar menu & content wrapper END -->
+
+            <div id="footer" class="hidden-print">
+
+                <!--  Copyright Line -->
+                <div class="copy">&copy; 2012 - 2013 - <a href="http://www.mosaicpro.biz">MosaicPro</a> - All Rights Reserved. <a href="http://themeforest.net/?ref=mosaicpro" target="_blank">Purchase FLAT KIT on ThemeForest</a> - Current version: v1.2.0 / <a target="_blank" href="http://demo.mosaicpro.biz/flatkit/CHANGELOG">changelog</a></div>
+                <!--  End Copyright Line -->
+
+            </div>
+            <!-- // Footer END -->
+
+        </div>
+        <!-- // Main Container Fluid END -->            
+       
+    }
+    else {
+        @RenderBody()   
+    }
+
+    @if (controller != "Account")
+    {
+        @Styles.Render("~/Content/MainWeb.css")
+        @Html.Partial("_NavigationForWebsite")        
+    }
+    else
+    {
+        @Styles.Render("~/Content/App.css")   
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var alertType = "@ViewBag.alertType";
+            if (alertType != "") {
+                var alertMessage = "@ViewBag.alertMessage";
+                var defaultNotyfy = notyfy({
+                    text: alertMessage,
+                    type: alertType,
+                    timeout: 5000
+                });
+            }
+        });
+    </script>
+
+
+
 
 
 </body>

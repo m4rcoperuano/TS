@@ -52,6 +52,7 @@
     <Compile Include="CompanyLocation.cs">
       <DependentUpon>TimesheetDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataCtx.cs" />
     <Compile Include="FileStorage.cs">
       <DependentUpon>TimesheetDB.tt</DependentUpon>
     </Compile>

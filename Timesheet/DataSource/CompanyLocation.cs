@@ -23,7 +23,7 @@ namespace DataSource
         public string CompanyLocation1 { get; set; }
         public int fk_company { get; set; }
     
-        public virtual Company Company { get; set; }
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

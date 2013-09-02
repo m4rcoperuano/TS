@@ -13,7 +13,7 @@ namespace Timesheet.Controllers
         private IAccountServices AccountService;
         public AccountController(IAccountServices AccountService)
         {
-            this.AccountService = AccountService;
+            this.AccountService = AccountService;            
         }
 
         [HttpGet]
@@ -28,7 +28,13 @@ namespace Timesheet.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.AccountService.LoginUser(loginModel);
+                if (this.AccountService.LoginUser(loginModel))
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+
+                ViewBag.alertType = "error";
+                ViewBag.alertMessage = this.AccountService.Message;
             }
             return View(loginModel);
         }
@@ -44,9 +50,53 @@ namespace Timesheet.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.AccountService.RegisterUser(registerModel);
+                if (this.AccountService.RegisterUser(registerModel))
+                {
+                    return RedirectToAction("Login", new
+                    {
+                        alertType="information",
+                        alertMessage="Thanks for registering. Please check your email to confirm your account."
+                    });
+                }
+                else
+                {
+                    ViewBag.alertType = "error";
+                    ViewBag.alertMessage = this.AccountService.Message;
+                }
             }
-            return View();
+            return View(registerModel);
+        }
+
+        [HttpGet]
+        public ActionResult Confirm(string confirmationToken)
+        {
+            if (this.AccountService.ConfirmUser(confirmationToken))
+            {
+                return RedirectToAction("Login", new
+                {
+                    alertType = "success",
+                    alertMessage = "Account confirmed successfully! Please login below."
+                });
+            }
+            else
+            {
+                return RedirectToAction("Login", new
+                {
+                    alertType="error",
+                    alertMessage = "Could not confirm your account. Please contact us for assistance."
+                });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            this.AccountService.LogoutUser();
+            return RedirectToAction("Login", new
+            {
+                alertType="information",
+                alertMessage="Successfully logged out."
+            });
         }
     }
 }
