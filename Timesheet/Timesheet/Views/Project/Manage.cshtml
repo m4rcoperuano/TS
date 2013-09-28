@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Domain.ViewModels.ProjectModel>
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Manage Projects
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Project #</th>
+                        <th>Client</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var projectModel in Model)
+                    {
+                        string rowClass = "";
+                        if (projectModel.Deleted)
+                        {
+                            rowClass = "danger";
+                        }
+                        
+                        <tr class="@rowClass">
+                            <td>@projectModel.ProjectName</td>
+                            <td>@projectModel.ProjectNumber</td>
+                            <td>@projectModel.ClientName</td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Project", new { @id = @projectModel.id })">
+                                    <button class="btn btn-xs btn-success">Edit</button>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

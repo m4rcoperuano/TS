@@ -1,124 +1,77 @@
-﻿@model Domain.Models.RegisterModel
+﻿@model Domain.ViewModels.RegisterModel
 @{
     ViewBag.Title = "Register";
     ViewBag.BodyClasses = " login";
 }
 
-<!-- Wrapper -->
-<div id="login">
 
-    <div class="container">
+<div class="container">
 
-        <div class="wrapper">
-
-            <h1 class="glyphicons lock">TIMESHEETS <i></i></h1>
-
-            
-            <div class="innerT center" style="padding-top:0;">                
-				<a href="index.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="btn btn-icon-stacked btn-block btn-facebook glyphicons facebook"><i></i><span>Join using your</span><span class="strong">Facebook Account</span></a>
-				<p>Or</p>
-				<a href="index.html?lang=en&amp;layout_type=fluid&amp;menu_position=menu-left&amp;style=style-default-menus-dark&amp;sidebar_type=collapsible" class="btn btn-icon-stacked btn-block btn-google glyphicons google_plus"><i></i><span>Join using your</span><span class="strong">Google Account</span></a>
-				<p>Or fill out our registration form below.</p>                
-                <p></p>
-            </div>            
-
-            <!-- Box -->
-            <div class="widget widget-heading-simple widget-body-gray">
-                
-                <div class="widget-body">
-                    <!-- Form -->
-                    @using (Html.BeginForm())
-                    {					 
-                        @Html.AntiForgeryToken()                       
-                        @Html.LabelFor(x=>x.Email)
-                        @Html.TextBoxFor(x=>x.Email, new { @class="input-block-level", placeholder="Email Address", type="email" })
-                        @Html.ValidationMessageFor(x=>x.Email)
-
-                        @Html.LabelFor(x=>x.Password)
-                        @Html.PasswordFor(x=>x.Password, new { @class="input-block-level", placeholder="Password" })
-                        @Html.ValidationMessageFor(x=>x.Password)
-
-                        @Html.LabelFor(x=>x.ConfirmPassword)
-                        @Html.PasswordFor(x=>x.ConfirmPassword, new { @class="input-block-level", placeholder="Confirm Password" })
-                        @Html.ValidationMessageFor(x=>x.ConfirmPassword)
-                        
-                        @Html.LabelFor(x=>x.FirstName)
-                        @Html.TextBoxFor(x=>x.FirstName, new { @class="input-block-level", placeholder="First Name" })
-                        @Html.ValidationMessageFor(x=>x.FirstName)
-
-                        @Html.LabelFor(x=>x.LastName)
-                        @Html.TextBoxFor(x=>x.LastName, new { @class="input-block-level", placeholder="Last Name" })
-                        @Html.ValidationMessageFor(x=>x.LastName)
-                        
-                        @Html.LabelFor(x=>x.CompanyName)
-                        @Html.TextBoxFor(x => x.CompanyName, new { @class="input-block-level", placeholder="Company Name" })
-                        @Html.ValidationMessageFor(x=>x.CompanyName)
-                                                                       
-                        <div class="separator bottom"></div> 
-                        <div class="row-fluid">
-                            <div class="span4 offset8 center">                                
-                                <button class="btn btn-block btn-inverse" type="submit">Sign Up</button>
-                            </div>
-                        </div>
-                    }
-                    <!-- // Form END -->                    
-                </div>
-                <p class="text-right">                    
-                    @Html.ActionLink("Already have an account? Click here to log in", "Login", new { @controller = "Account" } )
-                </p>
-
+    <!-- Form -->
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-signin" }))
+    {	
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="text-center">Register
+                </h4>
             </div>
-            <!-- // Box END -->
-
         </div>
+    			
+        <div class="row">
+            <div class="col-md-12">
+                @Html.AntiForgeryToken()
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email Address", type = "email" })
+                @Html.ValidationMessageFor(x => x.Email)
 
-    </div>
+                @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })
+                @Html.ValidationMessageFor(x => x.Password)
 
+                @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                @Html.ValidationMessageFor(x => x.ConfirmPassword)
+
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                @Html.ValidationMessageFor(x => x.FirstName)
+
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                @Html.ValidationMessageFor(x => x.LastName)
+
+                @Html.TextBoxFor(x => x.CompanyName, new { @class = "form-control", placeholder = "Company Name" })
+                @Html.ValidationMessageFor(x => x.CompanyName)
+            </div>
+        </div>                
+        <br />                     
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-block btn-primary" type="submit">Sign Up</button>
+            </div>
+        </div>
+    }
+    <!-- // Form END -->
 </div>
-<!-- // Wrapper END -->
+
+<p class="text-right">
+    @Html.ActionLink("Already have an account? Click here to log in", "Login", new { @controller = "Account" })
+</p>
 
 
 @section Scripts {
     <style>
-        #create-account-container {
-            padding-top: 25px;
+        .form-signin {
+            width: 275px;
+            margin: auto;
         }
+
+            .form-signin input[type="email"], .form-signin input[type="text"] {
+                margin-bottom: 12px;
+                padding: 20px 10px;
+            }
+
+            .form-signin input[type="password"] {
+                padding: 20px 10px;
+                margin-bottom: 12px;
+            }
     </style>
 
     @Scripts.Render("~/bundles/jqueryval")
 
 }
-
-
-@*<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
-
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
-    <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
-    </fieldset>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}*@

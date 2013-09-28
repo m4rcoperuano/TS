@@ -1,73 +1,10 @@
-﻿/*Overrides for FLAT UI*/
-.widget-body-gray .widget-body {
-    background-color:#F7F7F7 !important;
-    border: 1px solid #E0E0E0 !important;
+﻿
+body {
+    padding-top: 70px;
 }
 
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
-    border-color: #DADADA !important;
-    color:#333 !important;
+.ui-pnotify-title {
+    font-size:15px;
+    font-weight:bold;
+    margin-top:3px !important;
 }
-
-/*bootstrap overrides*/
-.btn-inverse:hover {
-    background-color:#585858 !important;
-}
-.btn-success:hover {
-    background-color:#51a351 !important;
-}
-
-/*MS used classes overrides*/
-.field-validation-error span {
-    padding: 1px 9px;
-    background-color: #9e3838;
-    color: white;
-    font-size: 11px;
-    
-    display: inline-block;
-    margin-top:-3px;
-    margin-bottom: 5px;
-}
-
-
-/*
-OLD :(
-    body {
-    padding-top:70px;
-    background:url(../Images/Global/app_background.png);
-}
-
-
-.circle-container {    
-    box-shadow:0px 2px 10px #444;
-    margin:auto;
-    background-color:#F9F9f9;
-}
-.circle-container .container-content {
-    margin:auto;    
-    position:relative;        
-}
-.circle-large {
-    width:530px;
-    height:530px;
-    border-radius:265px;    
-}
-.circle-large .container-content {
-    top:50px;
-    width:300px;    
-    height:430px;
-}
-
-
-
-.btn-container {
-    margin-top:20px;
-}
-.btn-container .btn {
-    margin-right:5px;
-}
-
-footer .copyright {
-    color:#AAA;
-    font-size:12px;
-}*/

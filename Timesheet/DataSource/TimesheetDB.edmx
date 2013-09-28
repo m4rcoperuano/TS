@@ -10,6 +10,7 @@
           <EntitySet Name="Companies" EntityType="TimesheetModel.Store.Companies" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CompanyLocations" EntityType="TimesheetModel.Store.CompanyLocations" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FileStorage" EntityType="TimesheetModel.Store.FileStorage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Projects" EntityType="TimesheetModel.Store.Projects" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="States" EntityType="TimesheetModel.Store.States" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserProfile" EntityType="TimesheetModel.Store.UserProfile" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="webpages_Membership" EntityType="TimesheetModel.Store.webpages_Membership" store:Type="Tables" Schema="dbo" />
@@ -31,6 +32,14 @@
           <AssociationSet Name="FK_CompanyLocations_Companies" Association="TimesheetModel.Store.FK_CompanyLocations_Companies">
             <End Role="Companies" EntitySet="Companies" />
             <End Role="CompanyLocations" EntitySet="CompanyLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_ClientProfiles" Association="TimesheetModel.Store.FK_Projects_ClientProfiles">
+            <End Role="ClientProfiles" EntitySet="ClientProfiles" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_UserProfile" Association="TimesheetModel.Store.FK_Projects_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="fk_RoleId" Association="TimesheetModel.Store.fk_RoleId">
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
@@ -54,10 +63,13 @@
           <Property Name="address" Type="nvarchar" Nullable="false" MaxLength="150" />
           <Property Name="address2" Type="nvarchar" Nullable="false" MaxLength="150" />
           <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="150" />
-          <Property Name="fk_state" Type="int" Nullable="false" />
+          <Property Name="fk_state" Type="int" />
           <Property Name="zip" Type="nvarchar" Nullable="false" MaxLength="5" />
           <Property Name="zip_4" Type="nvarchar" Nullable="false" MaxLength="4" />
           <Property Name="fk_company_location" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+          <Property Name="deleted_on" Type="datetime" />
         </EntityType>
         <EntityType Name="Companies">
           <Key>
@@ -87,6 +99,20 @@
           <Property Name="fk_file_type" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateDeleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="id_projects" />
+          </Key>
+          <Property Name="id_projects" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="ProjectNumber" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="Notes" Type="nvarchar" Nullable="false" MaxLength="750" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+          <Property Name="deleted_on" Type="datetime" />
+          <Property Name="fk_client" Type="int" Nullable="false" />
+          <Property Name="fk_created_by" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="States">
           <Key>
@@ -164,7 +190,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ClientProfiles_States">
-          <End Role="States" Type="TimesheetModel.Store.States" Multiplicity="1" />
+          <End Role="States" Type="TimesheetModel.Store.States" Multiplicity="0..1" />
           <End Role="ClientProfiles" Type="TimesheetModel.Store.ClientProfiles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="States">
@@ -198,6 +224,32 @@
             </Principal>
             <Dependent Role="CompanyLocations">
               <PropertyRef Name="fk_company" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_ClientProfiles">
+          <End Role="ClientProfiles" Type="TimesheetModel.Store.ClientProfiles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projects" Type="TimesheetModel.Store.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientProfiles">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="fk_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_UserProfile">
+          <End Role="UserProfile" Type="TimesheetModel.Store.UserProfile" Multiplicity="1" />
+          <End Role="Projects" Type="TimesheetModel.Store.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="fk_created_by" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -267,8 +319,8 @@
             <End Role="Company" EntitySet="Companies" />
             <End Role="CompanyLocation" EntitySet="CompanyLocations" />
           </AssociationSet>
-          <EntitySet Name="ClientProfiles" EntityType="TimesheetModel.ClientProfile" />
           <EntitySet Name="States" EntityType="TimesheetModel.State" />
+          <EntitySet Name="ClientProfiles" EntityType="TimesheetModel.ClientProfile" />
           <AssociationSet Name="FK_ClientProfiles_CompanyLocations" Association="TimesheetModel.FK_ClientProfiles_CompanyLocations">
             <End Role="CompanyLocation" EntitySet="CompanyLocations" />
             <End Role="ClientProfile" EntitySet="ClientProfiles" />
@@ -277,7 +329,16 @@
             <End Role="State" EntitySet="States" />
             <End Role="ClientProfile" EntitySet="ClientProfiles" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Projects" EntityType="TimesheetModel.Project" />
+          <AssociationSet Name="FK_Projects_ClientProfiles" Association="TimesheetModel.FK_Projects_ClientProfiles">
+            <End Role="ClientProfile" EntitySet="ClientProfiles" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_UserProfile" Association="TimesheetModel.FK_Projects_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="CompanyLocation">
           <Key>
             <PropertyRef Name="id_company_locations" />
@@ -317,6 +378,7 @@
           <Property Type="Int32" Name="fk_company_location" Nullable="false" />
           <NavigationProperty Name="CompanyLocation" Relationship="TimesheetModel.FK_UserProfile_CompanyLocations" FromRole="UserProfile" ToRole="CompanyLocation" />
           <NavigationProperty Name="webpages_Roles" Relationship="TimesheetModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
+          <NavigationProperty Name="Projects" Relationship="TimesheetModel.FK_Projects_UserProfile" FromRole="UserProfile" ToRole="Project" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -405,6 +467,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="id_state" />
+          </Key>
+          <Property Type="Int32" Name="id_state" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="state_name" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="state_abbrev" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="ClientProfiles" Relationship="TimesheetModel.FK_ClientProfiles_States" FromRole="State" ToRole="ClientProfile" />
+        </EntityType>
         <EntityType Name="ClientProfile">
           <Key>
             <PropertyRef Name="id_client" />
@@ -414,21 +485,16 @@
           <Property Type="String" Name="address" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="address2" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="city" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="fk_state" Nullable="false" />
+          <Property Type="Int32" Name="fk_state" />
           <Property Type="String" Name="zip" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="zip_4" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="fk_company_location" Nullable="false" />
           <NavigationProperty Name="CompanyLocation" Relationship="TimesheetModel.FK_ClientProfiles_CompanyLocations" FromRole="ClientProfile" ToRole="CompanyLocation" />
           <NavigationProperty Name="State" Relationship="TimesheetModel.FK_ClientProfiles_States" FromRole="ClientProfile" ToRole="State" />
-        </EntityType>
-        <EntityType Name="State">
-          <Key>
-            <PropertyRef Name="id_state" />
-          </Key>
-          <Property Type="Int32" Name="id_state" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="state_name" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="state_abbrev" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="ClientProfiles" Relationship="TimesheetModel.FK_ClientProfiles_States" FromRole="State" ToRole="ClientProfile" />
+          <Property Type="DateTime" Name="created_at" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="updated_at" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="deleted_on" Precision="3" />
+          <NavigationProperty Name="Projects" Relationship="TimesheetModel.FK_Projects_ClientProfiles" FromRole="ClientProfile" ToRole="Project" />
         </EntityType>
         <Association Name="FK_ClientProfiles_CompanyLocations">
           <End Type="TimesheetModel.CompanyLocation" Role="CompanyLocation" Multiplicity="1">
@@ -445,7 +511,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ClientProfiles_States">
-          <End Type="TimesheetModel.State" Role="State" Multiplicity="1" />
+          <End Type="TimesheetModel.State" Role="State" Multiplicity="0..1" />
           <End Type="TimesheetModel.ClientProfile" Role="ClientProfile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="State">
@@ -453,6 +519,48 @@
             </Principal>
             <Dependent Role="ClientProfile">
               <PropertyRef Name="fk_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="id_projects" />
+          </Key>
+          <Property Type="Int32" Name="id_projects" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProjectNumber" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Notes" Nullable="false" MaxLength="750" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="created_at" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="updated_at" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="deleted_on" Precision="3" />
+          <Property Type="Int32" Name="fk_client" Nullable="false" />
+          <Property Type="Int32" Name="fk_created_by" Nullable="false" />
+          <NavigationProperty Name="ClientProfile" Relationship="TimesheetModel.FK_Projects_ClientProfiles" FromRole="Project" ToRole="ClientProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="TimesheetModel.FK_Projects_UserProfile" FromRole="Project" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_Projects_ClientProfiles">
+          <End Type="TimesheetModel.ClientProfile" Role="ClientProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TimesheetModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientProfile">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="fk_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_UserProfile">
+          <End Type="TimesheetModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="TimesheetModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="fk_created_by" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -550,9 +658,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="TimesheetModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="state_abbrev" ColumnName="state_abbrev" />
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+                <ScalarProperty Name="id_state" ColumnName="id_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ClientProfiles">
             <EntityTypeMapping TypeName="TimesheetModel.ClientProfile">
               <MappingFragment StoreEntitySet="ClientProfiles">
+                <ScalarProperty Name="deleted_on" ColumnName="deleted_on" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
                 <ScalarProperty Name="fk_company_location" ColumnName="fk_company_location" />
                 <ScalarProperty Name="zip_4" ColumnName="zip_4" />
                 <ScalarProperty Name="zip" ColumnName="zip" />
@@ -565,12 +685,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="States">
-            <EntityTypeMapping TypeName="TimesheetModel.State">
-              <MappingFragment StoreEntitySet="States">
-                <ScalarProperty Name="state_abbrev" ColumnName="state_abbrev" />
-                <ScalarProperty Name="state_name" ColumnName="state_name" />
-                <ScalarProperty Name="id_state" ColumnName="id_state" />
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="TimesheetModel.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="fk_created_by" ColumnName="fk_created_by" />
+                <ScalarProperty Name="fk_client" ColumnName="fk_client" />
+                <ScalarProperty Name="deleted_on" ColumnName="deleted_on" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="id_projects" ColumnName="id_projects" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

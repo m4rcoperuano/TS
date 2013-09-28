@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Domain.ViewModels.ClientProfileModel>
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Manage Clients
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var clientProfileModel in Model)
+                    {
+                        string rowClass = "";
+                        if (clientProfileModel.Deleted)
+                        {
+                            rowClass = "danger";
+                        }
+                        
+                        <tr class="@rowClass">
+                            <td>@clientProfileModel.ClientName</td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Client", new { @id=@clientProfileModel.ClientId })">
+                                    <button class="btn btn-xs btn-success">Edit</button>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

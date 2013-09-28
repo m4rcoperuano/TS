@@ -27,7 +27,6 @@ namespace Timesheet
 
             //var container = 
             Bootstrapper.Initialise();
-            Bootstrapper.RegisterMapper();
             //Bootstrapper.RegisterTypes(container);
         }
     }

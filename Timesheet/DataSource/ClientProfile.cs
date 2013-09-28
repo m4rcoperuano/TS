@@ -7,24 +7,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataSource
+namespace Timesheet.Core
 {
     using System;
     using System.Collections.Generic;
     
     public partial class ClientProfile
     {
+        public ClientProfile()
+        {
+            this.Projects = new HashSet<Project>();
+        }
+    
         public int id_client { get; set; }
         public string client_name { get; set; }
         public string address { get; set; }
         public string address2 { get; set; }
         public string city { get; set; }
-        public int fk_state { get; set; }
+        public Nullable<int> fk_state { get; set; }
         public string zip { get; set; }
         public string zip_4 { get; set; }
         public int fk_company_location { get; set; }
+        public System.DateTime created_at { get; set; }
+        public System.DateTime updated_at { get; set; }
+        public Nullable<System.DateTime> deleted_on { get; set; }
     
         public virtual CompanyLocation CompanyLocation { get; set; }
         public virtual State State { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Domain.Models;
+using Domain.ViewModels;
 using Domain;
-using Timesheet.Services;
+using Domain.Services;
 using Domain.IServices;
+using Timesheet.Services;
 using AutoMapper;
-using DataSource;
+using DataAccessLayer;
 using Timesheet.Controllers;
+using Timesheet.Core.Interfaces;
+using Timesheet.Core.Services;
 
 namespace Timesheet.Tests.Controllers
 {
@@ -86,14 +89,16 @@ namespace Timesheet.Tests.Controllers
 
             IAccountServices accountService = new AccountImplementation();
             AccountController accountController = new AccountController(accountService);
-            accountController.Register(regModel);            
-            
+            accountController.Register(regModel);                        
         }
 
         [TestMethod]
         public void Login()
         {
-            IAccountServices service = new AccountServices(new AccountMembership());
+            IRepository repository = new Repository();
+            IMembership membership = new Membership(repository);
+
+            IAccountServices service = new AccountServices(membership, repository);
             LoginModel loginModel = new LoginModel();
             loginModel.Email = "marco.j.ledesma@gmail.com";
             loginModel.Password = "Castle12!";

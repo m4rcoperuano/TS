@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataSource
+namespace Timesheet.Core
 {
     using System;
     using System.Collections.Generic;

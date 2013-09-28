@@ -8,19 +8,22 @@
         <EntityTypeShape EntityType="TimesheetModel.CompanyLocation" Width="1.5" PointX="5.25" PointY="4.5" />
         <EntityTypeShape EntityType="TimesheetModel.FileStorage" Width="1.5" PointX="0.75" PointY="4.25" />
         <EntityTypeShape EntityType="TimesheetModel.UserProfile" Width="1.5" PointX="7.5" PointY="4.125" />
-        <EntityTypeShape EntityType="TimesheetModel.webpages_Membership" Width="1.5" PointX="0.75" PointY="7.875" />
-        <EntityTypeShape EntityType="TimesheetModel.webpages_OAuthMembership" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="TimesheetModel.webpages_Membership" Width="1.5" PointX="0.75" PointY="8.25" />
+        <EntityTypeShape EntityType="TimesheetModel.webpages_OAuthMembership" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="TimesheetModel.webpages_Roles" Width="1.5" PointX="5.25" PointY="1.875" />
         <AssociationConnector Association="TimesheetModel.FK_UserProfile_CompanyLocations" />
         <AssociationConnector Association="TimesheetModel.webpages_UsersInRoles" />
         <EntityTypeShape EntityType="TimesheetModel.Company" Width="1.5" PointX="3" PointY="4.625" />
         <AssociationConnector Association="TimesheetModel.FK_Companies_FileStorage" />
         <AssociationConnector Association="TimesheetModel.FK_CompanyLocations_Companies" />
-        <EntityTypeShape EntityType="TimesheetModel.ClientProfile" Width="1.5" PointX="10.5" PointY="4.125" />
         <EntityTypeShape EntityType="TimesheetModel.State" Width="1.5" PointX="8.25" PointY="0.75" />
+        <EntityTypeShape EntityType="TimesheetModel.ClientProfile" Width="1.5" PointX="10.5" PointY="3.75" />
         <AssociationConnector Association="TimesheetModel.FK_ClientProfiles_CompanyLocations" />
         <AssociationConnector Association="TimesheetModel.FK_ClientProfiles_States" />
-      </Diagram>
+        <EntityTypeShape EntityType="TimesheetModel.Project" Width="1.5" PointX="12.75" PointY="4.125" />
+        <AssociationConnector Association="TimesheetModel.FK_Projects_ClientProfiles" />
+        <AssociationConnector Association="TimesheetModel.FK_Projects_UserProfile" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

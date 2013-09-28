@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataSource
+namespace Timesheet.Core
 {
     using System;
     using System.Data.Entity;
@@ -32,7 +32,8 @@ namespace DataSource
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<ClientProfile> ClientProfiles { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<ClientProfile> ClientProfiles { get; set; }
+        public DbSet<Project> Projects { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataSource
+namespace Timesheet.Core
 {
     using System;
     using System.Collections.Generic;
@@ -17,6 +17,7 @@ namespace DataSource
         public UserProfile()
         {
             this.webpages_Roles = new HashSet<webpages_Roles>();
+            this.Projects = new HashSet<Project>();
         }
     
         public int UserId { get; set; }
@@ -30,5 +31,6 @@ namespace DataSource
     
         public virtual CompanyLocation CompanyLocation { get; set; }
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

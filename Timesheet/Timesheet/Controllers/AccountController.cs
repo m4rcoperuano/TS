@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Domain.Models;
+using Domain.ViewModels;
+using Domain.Services;
 using Domain.IServices;
 
 namespace Timesheet.Controllers
@@ -35,6 +36,7 @@ namespace Timesheet.Controllers
 
                 ViewBag.alertType = "error";
                 ViewBag.alertMessage = this.AccountService.Message;
+                ViewBag.alertTitle = "Error!";
             }
             return View(loginModel);
         }
@@ -54,12 +56,14 @@ namespace Timesheet.Controllers
                 {
                     return RedirectToAction("Login", new
                     {
-                        alertType="information",
+                        alertTitle="Success",
+                        alertType="info",
                         alertMessage="Thanks for registering. Please check your email to confirm your account."
                     });
                 }
                 else
                 {
+                    ViewBag.alertTitle = "Error!";
                     ViewBag.alertType = "error";
                     ViewBag.alertMessage = this.AccountService.Message;
                 }
@@ -74,6 +78,7 @@ namespace Timesheet.Controllers
             {
                 return RedirectToAction("Login", new
                 {
+                    alertTitle="Success",
                     alertType = "success",
                     alertMessage = "Account confirmed successfully! Please login below."
                 });
@@ -82,6 +87,7 @@ namespace Timesheet.Controllers
             {
                 return RedirectToAction("Login", new
                 {
+                    alertTitle="Error!",
                     alertType="error",
                     alertMessage = "Could not confirm your account. Please contact us for assistance."
                 });
@@ -94,7 +100,7 @@ namespace Timesheet.Controllers
             this.AccountService.LogoutUser();
             return RedirectToAction("Login", new
             {
-                alertType="information",
+                alertType="info",
                 alertMessage="Successfully logged out."
             });
         }
